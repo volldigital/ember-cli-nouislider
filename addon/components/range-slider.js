@@ -7,34 +7,33 @@ import { isEmpty } from '@ember/utils';
 import { observer, computed } from '@ember/object';
 import noUiSlider from 'noUiSlider';
 
-
 export default Component.extend({
   attributeBindings: ['disabledOrUndefined:disabled'],
-  slider:           null,
-  start:            undefined,
-  step:             undefined,
-  margin:           undefined,
-  padding:      undefined,
-  limit:            undefined,
-  pips:             undefined,
-  animate:          true,
-  snap:             false,
-  connect:          false,
-  disabled:         false,
-  orientation:      'horizontal',
-  direction:        'ltr',
-  behaviour:        'tap',
-  tooltips:         false,
-  multitouch:       false,
-  keyboardSupport:  true,
+  slider: null,
+  start: undefined,
+  step: undefined,
+  margin: undefined,
+  padding: undefined,
+  limit: undefined,
+  pips: undefined,
+  animate: true,
+  snap: false,
+  connect: false,
+  disabled: false,
+  orientation: 'horizontal',
+  direction: 'ltr',
+  behaviour: 'tap',
+  tooltips: false,
+  multitouch: false,
+  keyboardSupport: true,
 
   min: 0,
   max: 100,
 
-  range: computed('min', 'max', function() {
+  range: computed('min', 'max', function () {
     return {
       min: this.get('min'),
-      max: this.get('max')
+      max: this.get('max'),
     };
   }),
 
@@ -46,10 +45,10 @@ export default Component.extend({
     return +value;
   },
 
-  format: computed('formatTo', 'formatFrom', function() {
+  format: computed('formatTo', 'formatFrom', function () {
     return {
       to: this.get('formatTo'),
-      from: this.get('formatFrom')
+      from: this.get('formatFrom'),
     };
   }),
 
@@ -61,13 +60,25 @@ export default Component.extend({
     let element = this.get('element');
     let { noUiSlider: slider } = element;
     let properties = this.getProperties(
-      'start', 'step', 'margin', 'padding',
-      'limit', 'range', 'connect',
-      'orientation', 'direction',
-      'behaviour', 'animate', 'snap',
-      'pips', 'format', 'tooltips',
-      'multitouch', 'cssPrefix',
-      'cssClasses', 'keyboardSupport'
+      'start',
+      'step',
+      'margin',
+      'padding',
+      'limit',
+      'range',
+      'connect',
+      'orientation',
+      'direction',
+      'behaviour',
+      'animate',
+      'snap',
+      'pips',
+      'format',
+      'tooltips',
+      'multitouch',
+      'cssPrefix',
+      'cssClasses',
+      'keyboardSupport'
     );
     let sliderEvents = A(['change', 'set', 'slide', 'update']);
 
@@ -79,24 +90,24 @@ export default Component.extend({
     try {
       slider = noUiSlider.create(element, properties, true);
     } catch (err) {
-      console.warn(`[ember-cli-nouislider]: ${err}`);
+      console.warn(`[@voll/ember-cli-nouislider]: ${err}`);
     }
 
     this.slider = slider;
 
-    sliderEvents.forEach(event => {
+    sliderEvents.forEach((event) => {
       const eventActionName = `on-${event}`;
 
       if (!isEmpty(this.get(eventActionName))) {
         slider.on(event, () => {
-          run(this, function() {
+          run(this, function () {
             const val = this.get('slider').get();
             const action = this.get(eventActionName);
 
-            if (typeof(action) === 'string') {
+            if (typeof action === 'string') {
               // Note that `sendAction` is deprecated and this will trigger a deprecation message.
               this.sendAction(eventActionName, val);
-            } else if (typeof(action) === 'function') {
+            } else if (typeof action === 'function') {
               action(val);
             }
           });
@@ -105,20 +116,20 @@ export default Component.extend({
     });
 
     slider.on('start', () => {
-      run(this, function() {
+      run(this, function () {
         this.onStart();
         if (!isEmpty(this.get(`on-start`))) {
-          let val = this.get("slider").get();
+          let val = this.get('slider').get();
           this.sendAction(`on-start`, val);
         }
       });
     });
 
     slider.on('end', () => {
-      run(this, function() {
+      run(this, function () {
         this.onEnd();
         if (!isEmpty(this.get(`on-end`))) {
-          let val = this.get("slider").get();
+          let val = this.get('slider').get();
           this.sendAction(`on-end`, val);
         }
       });
@@ -140,9 +151,15 @@ export default Component.extend({
   update() {
     let { slider } = this;
     let properties = this.getProperties(
-      'margin', 'limit', 'step',
-      'range', 'animate', 'snap',
-      'start', 'padding', 'keyboardSupport'
+      'margin',
+      'limit',
+      'step',
+      'range',
+      'animate',
+      'snap',
+      'start',
+      'padding',
+      'keyboardSupport'
     );
 
     if (slider) {
@@ -163,7 +180,7 @@ export default Component.extend({
     slider.destroy();
   },
 
-  setValue: observer('start', function() {
+  setValue: observer('start', function () {
     let { slider } = this;
 
     if (slider && !this.sliding) {
@@ -173,10 +190,10 @@ export default Component.extend({
   }),
 
   // disabled can't be just `false` - this leads to an attribute of disabled="false"
-  disabledOrUndefined: computed('disabled', function() {
+  disabledOrUndefined: computed('disabled', function () {
     if (this.get('disabled')) {
       return true;
     }
     return undefined;
-  })
+  }),
 });

@@ -2,7 +2,7 @@
 
 ## Installation
 
-* `git clone https://github.com/kennethkalmer/ember-cli-nouislider`
+* `git clone https://github.com/volldigital/ember-cli-nouislider`
 * `cd ember-cli-nouislider`
 * `yarn install`
 

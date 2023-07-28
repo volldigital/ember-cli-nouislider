@@ -6,9 +6,9 @@ var Funnel = require('broccoli-funnel');
 var MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
-  name: 'ember-cli-nouislider',
+  name: '@voll/ember-cli-nouislider',
 
-  included: function() {
+  included: function () {
     this._super.included.apply(this, arguments);
     this._ensureThisImport();
 
@@ -19,15 +19,18 @@ module.exports = {
     }
   },
 
-  treeForVendor: function(vendorTree) {
-    var nouisliderTree = new Funnel(path.dirname(require.resolve('nouislider/distribute/nouislider.js')), {
-      files: ['nouislider.js', 'nouislider.min.css']
-    });
+  treeForVendor: function (vendorTree) {
+    var nouisliderTree = new Funnel(
+      path.dirname(require.resolve('nouislider/distribute/nouislider.js')),
+      {
+        files: ['nouislider.js', 'nouislider.min.css'],
+      }
+    );
 
     return new MergeTrees([vendorTree, nouisliderTree]);
   },
 
-  _ensureThisImport: function() {
+  _ensureThisImport: function () {
     if (!this.import) {
       this._findHost = function findHostShim() {
         var current = this;
@@ -42,5 +45,5 @@ module.exports = {
         app.import(asset, options);
       };
     }
-  }
+  },
 };

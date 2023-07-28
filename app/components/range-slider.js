@@ -1,1 +1,1 @@
-export { default } from 'ember-cli-nouislider/components/range-slider';
+export { default } from '@voll/ember-cli-nouislider/components/range-slider';

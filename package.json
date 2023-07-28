@@ -1,10 +1,9 @@
 {
-  "name": "ember-cli-nouislider",
+  "name": "@voll/ember-cli-nouislider",
   "version": "1.2.1",
   "description": "Ember range-slider component powered by nouislider",
   "author": "Kenneth Kalmer",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
   "scripts": {
@@ -56,13 +55,21 @@
     "jquery range slider",
     "ember-component"
   ],
-  "repository": "https://github.com/kennethkalmer/ember-cli-nouislider",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volldigital/ember-cli-nouislider.git"
+  },
   "license": "MIT",
   "engines": {
     "node": "10.* || >= 12"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "http://kennethkalmer.github.com/ember-cli-nouislider"
-  }
+    "demoURL": "http://volldigital.github.com/ember-cli-nouislider"
+  },
+  "bugs": {
+    "url": "https://github.com/volldigital/ember-cli-nouislider/issues"
+  },
+  "homepage": "https://github.com/volldigital/ember-cli-nouislider#readme",
+  "main": "index.js"
 }
